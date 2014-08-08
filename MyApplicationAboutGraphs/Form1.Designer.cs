@@ -33,7 +33,7 @@
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.labelEdges = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.labelPossibleEdges = new System.Windows.Forms.Label();
             this.labelVertices = new System.Windows.Forms.Label();
             this.buttonReset = new System.Windows.Forms.Button();
             this.buttonFindPath = new System.Windows.Forms.Button();
@@ -49,6 +49,10 @@
             this.canvas.Size = new System.Drawing.Size(600, 343);
             this.canvas.TabIndex = 0;
             this.canvas.TabStop = false;
+            this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
+            this.canvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseDown);
+            this.canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseMove);
+            this.canvas.MouseUp += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseUp);
             // 
             // richTextBox1
             // 
@@ -58,7 +62,7 @@
             this.richTextBox1.Location = new System.Drawing.Point(12, 361);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(794, 89);
+            this.richTextBox1.Size = new System.Drawing.Size(794, 99);
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
             // 
@@ -82,15 +86,15 @@
             this.labelEdges.TabIndex = 3;
             this.labelEdges.Text = "Edges:";
             // 
-            // label3
+            // labelPossibleEdges
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(618, 68);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(152, 17);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Possible vertices:";
+            this.labelPossibleEdges.AutoSize = true;
+            this.labelPossibleEdges.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelPossibleEdges.Location = new System.Drawing.Point(618, 68);
+            this.labelPossibleEdges.Name = "labelPossibleEdges";
+            this.labelPossibleEdges.Size = new System.Drawing.Size(128, 17);
+            this.labelPossibleEdges.TabIndex = 4;
+            this.labelPossibleEdges.Text = "Possible edges:";
             // 
             // labelVertices
             // 
@@ -122,6 +126,7 @@
             this.buttonFindPath.TabIndex = 7;
             this.buttonFindPath.Text = "FIND SHORT PATH";
             this.buttonFindPath.UseVisualStyleBackColor = true;
+            this.buttonFindPath.Click += new System.EventHandler(this.buttonFindPath_Click);
             // 
             // buttonMinSpanTree
             // 
@@ -132,17 +137,18 @@
             this.buttonMinSpanTree.TabIndex = 8;
             this.buttonMinSpanTree.Text = "MIN SPAN TREE";
             this.buttonMinSpanTree.UseVisualStyleBackColor = true;
+            this.buttonMinSpanTree.Click += new System.EventHandler(this.buttonMinSpanTree_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(818, 462);
+            this.ClientSize = new System.Drawing.Size(818, 472);
             this.Controls.Add(this.buttonMinSpanTree);
             this.Controls.Add(this.buttonFindPath);
             this.Controls.Add(this.buttonReset);
             this.Controls.Add(this.labelVertices);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.labelPossibleEdges);
             this.Controls.Add(this.labelEdges);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.richTextBox1);
@@ -164,7 +170,7 @@
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelEdges;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelPossibleEdges;
         private System.Windows.Forms.Label labelVertices;
         private System.Windows.Forms.Button buttonReset;
         private System.Windows.Forms.Button buttonFindPath;

@@ -119,8 +119,8 @@
   </resheader>
   <data name="richTextBox1.Text" xml:space="preserve">
     <value>To add a vertex - left click.
-To add an edge - right click on each vertex of pair of vertex.
-Minimal Span Tree - show minimal spannig tree to connect all vertices.
-To find a shortest path in a graph, please Alt+left click on two difference vertices, then click "FIND SHORT PATH" button.</value>
+To add an edge - right click on a vertex and move cursor to another vertex.
+Minimal Span Tree - select start vertex by CTRL + left click  and then click "MIN SPAN TREE" button to show minimal spannig tree to connect all vertices.
+To find a shortest path in a graph, please CTRL+left click on two difference vertices, then click "FIND SHORT PATH" button.</value>
   </data>
 </root>
