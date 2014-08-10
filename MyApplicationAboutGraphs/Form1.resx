@@ -123,4 +123,10 @@ To add an edge - right click on a vertex and move cursor to another vertex.
 Minimal Span Tree - select start vertex by CTRL + left click  and then click "MIN SPAN TREE" button to show minimal spannig tree to connect all vertices.
 To find a shortest path in a graph, please CTRL+left click on two difference vertices, then click "FIND SHORT PATH" button.</value>
   </data>
+  <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="saveFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>132, 17</value>
+  </metadata>
 </root>

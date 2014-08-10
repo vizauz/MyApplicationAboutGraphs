@@ -22,7 +22,7 @@ namespace MyApplicationAboutGraphs
             int dx = startVertex.Pos.X - endVertex.Pos.X;
             int dy = startVertex.Pos.Y - endVertex.Pos.Y;
 
-            Weight = (int)Math.Sqrt(dx * dx - dy * dy) % 50;
+            Weight = (int)Math.Sqrt(dx * dx + dy * dy) / 20;
         }
 
         public void Draw(Graphics g)
@@ -36,10 +36,10 @@ namespace MyApplicationAboutGraphs
             g.DrawLine(this.stroke, startVertex.Pos, endVertex.Pos);
             g.DrawString(
                 Weight.ToString(),
-                new Font("consolas", 10), new SolidBrush(Color.White),
+                new Font(FontFamily.GenericMonospace, 10, FontStyle.Italic),
+                new SolidBrush(Color.Black),
                 labelPos
                 );
         }
-
     }
 }

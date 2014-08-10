@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace MyApplicationAboutGraphs
 {
@@ -135,7 +136,7 @@ namespace MyApplicationAboutGraphs
                         vertices.Add(new Vertex(new Point(e.X, e.Y), labels[labelCount % labels.Length] + labels[labelCount % labels.Length]));
                     }
                     labelCount++;
-                }
+                } 
             }
             else if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
@@ -216,6 +217,7 @@ namespace MyApplicationAboutGraphs
         private void buttonMinSpanTree_Click(object sender, EventArgs e)
         {
             minSpanTree.Clear();
+            shortPath.Clear();
             Graph g = new Graph();
             foreach (Vertex v in vertices)
             {
@@ -239,6 +241,8 @@ namespace MyApplicationAboutGraphs
         private void buttonFindPath_Click(object sender, EventArgs e)
         {
             shortPath.Clear();
+            minSpanTree.Clear();
+
             Graph g = new Graph();
             foreach (Vertex v in vertices)
             {
@@ -268,6 +272,120 @@ namespace MyApplicationAboutGraphs
             }
             g.Dispose();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            shortPath.Clear();
+            minSpanTree.Clear();
+            markedVertices.Clear();
+
+            foreach (Vertex v in vertices)
+            {
+                if (v.Marked)
+                    v.Marked = !v.Marked;
+            }
+
+            canvas.Refresh();
+        }
+
+        private void saveGraphToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Graph files (*.gr)|*.gr";
+            DialogResult result = sfd.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+
+                using (StreamWriter sw = new StreamWriter(sfd.FileName))
+                {
+                    if (vertices.Count > 0)
+                    {
+                        sw.WriteLine("Vertices");
+                        foreach (Vertex v in vertices)
+                        {
+                            sw.WriteLine(String.Format("{0} {1} {2}", v.Label, v.Pos.X, v.Pos.Y));
+                        }
+                    }
+
+                    if (edges.Count > 0)
+                    {
+                        sw.WriteLine("Edges");
+                        foreach (Edge ed in edges)
+                        {
+                            sw.WriteLine(String.Format("{0} {1}", ed.startVertex.Label, ed.endVertex.Label));
+                        } 
+                    }
+                }
+            }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void openGraphToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Graph files (*.gr) | *.gr";
+            DialogResult dr = ofd.ShowDialog();
+            if (dr == System.Windows.Forms.DialogResult.OK)
+            {
+                vertices.Clear();
+                edges.Clear();
+
+                using (StreamReader sr = new StreamReader(ofd.FileName))
+                {
+                    
+                    string str = String.Empty;
+                    bool v = false, ed = false;
+
+                    while ((str = sr.ReadLine()) != null)
+                    {
+                        if (v)
+                        {
+                            
+                            string[] tmpVertex = sr.ReadLine().Trim(new char[] { ' ' }).Split(new char[] { ' ' });
+                            if (tmpVertex.Length == 3)
+                            {
+                                vertices.Add(new Vertex(new Point(Int32.Parse(tmpVertex[1]), Int32.Parse(tmpVertex[2])), tmpVertex[0]));
+                            }
+                        }
+
+                        if (ed)
+                        {
+                            
+                            string[] tmpEdge = sr.ReadLine().Trim(new char[] { ' ' }).Split(new char[] { ' ' });
+                            foreach (Vertex v1 in vertices)
+                            {
+                                if (v1.Label.Equals(tmpEdge[0]))
+                                {
+                                    foreach (Vertex v2 in vertices)
+                                    {
+                                        if (v2.Label.Equals(tmpEdge[1]))
+                                        {
+                                            edges.Add(new Edge(v1, v2));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        if (str == "Vertices")
+                        {
+                            v = true;
+                        }
+
+                        if (str == "Edges")
+                        {
+                            v = false;
+                            ed = true;
+                        }
+                            
+                    }
+                }
+            }
+            canvas.Refresh();
+        }
     }
 }
-// TODO: Прикрутить граф к этой красоте
